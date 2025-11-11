@@ -20,6 +20,12 @@ return new class extends Migration
             $table->boolean('is_dislike')
                 ->default(false);
             $table->timestamps();
+
+            $table->unique([
+                'author_id',
+                'likeable_type',
+                'likeable_id',
+            ]);
         });
     }
 
