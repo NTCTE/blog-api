@@ -23,13 +23,13 @@ class RegistrationRequest extends FormRequest
     {
         return [
             'name' => [
-                'string', 'max:255',
+                'required', 'string', 'max:255',
             ],
             'email' => [
-                'string', 'email',
+                'required', 'string', 'email',
             ],
             'password' => [
-                'string', 'min:8', 'max:64', 'confirmed',
+                'required', 'string', 'min:8', 'max:64', 'confirmed',
             ],
             'bio' => [
                 'nullable', 'string', 'max:255',
