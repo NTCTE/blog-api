@@ -4,7 +4,7 @@ namespace App\Structures\Users;
 
 use Spatie\LaravelData\Data;
 
-final class Auth extends Data
+final class AuthDTO extends Data
 {
     public function __construct(
         public string $email,
