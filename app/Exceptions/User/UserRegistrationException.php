@@ -3,6 +3,8 @@
 namespace App\Exceptions\User;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserRegistrationException extends Exception
 {
@@ -13,5 +15,17 @@ class UserRegistrationException extends Exception
         )
     {
         parent::__construct(__($message), $code, $previous);
+    }
+
+    public function report(): null
+    {
+        return null;
+    }
+
+    public function render(Request $request): JsonResponse
+    {
+        return new JsonResponse([
+            'message' => $this->message,
+        ], 422);
     }
 }
