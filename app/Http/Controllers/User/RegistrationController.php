@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegistrationRequest;
 use App\Http\Resources\User\RegistrationResource;
 use App\Structures\Users\RegistrationDTO;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class RegistrationController extends Controller
 {
@@ -17,7 +18,7 @@ class RegistrationController extends Controller
 
     }
 
-    public function register(RegistrationRequest $request)
+    public function register(RegistrationRequest $request): JsonResource
     {
         $validated = $request->validated();
         $dto = RegistrationDTO::from($validated);
