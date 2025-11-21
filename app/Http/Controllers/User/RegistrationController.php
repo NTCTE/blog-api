@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Contracts\User\RegistrationInterface;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\RegistrationRequest;
+use App\Http\Resources\User\RegistrationResource;
+use App\Structures\Users\RegistrationDTO;
+
+class RegistrationController extends Controller
+{
+    public function __construct(
+        private RegistrationInterface $service
+    )
+    {
+
+    }
+
+    public function register(RegistrationRequest $request)
+    {
+        $validated = $request->validated();
+        $dto = RegistrationDTO::from($validated);
+
+        return $this->service->register($dto)->toResource(RegistrationResource::class);
+    }
+}
