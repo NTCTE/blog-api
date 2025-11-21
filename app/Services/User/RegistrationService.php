@@ -14,7 +14,7 @@ class RegistrationService implements RegistrationInterface
         try {
             return User::create($user->toArray());
         } catch (\Exception $e) {
-            throw new UserRegistrationException();
+            throw new UserRegistrationException(previous: $e);
         }
     }
 }
