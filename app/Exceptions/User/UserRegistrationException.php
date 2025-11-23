@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class UserRegistrationException extends Exception
 {
     public function __construct(
-        public string $message = 'user.registration.failed',
-        public int $code = 0,
-        public ?\Throwable $previous = null
+        string $message = 'user.registration.failed',
+        int $code = 0,
+        ?\Throwable $previous = null
         )
     {
         parent::__construct(__($message), $code, $previous);
