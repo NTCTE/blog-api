@@ -28,6 +28,9 @@ class LoginRequest extends FormRequest
             'password' => [
                 'required', 'string', 'min:8', 'max:64',
             ],
+            'remember' => [
+                'sometimes', 'boolean',
+            ],
         ];
     }
 
@@ -36,6 +39,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => __('attributes.user.email'),
             'password' => __('attributes.user.password'),
+            'remember' => __('attributes.user.remember'),
         ];
     }
 }
