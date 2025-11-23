@@ -6,7 +6,7 @@ use App\Exceptions\User\UserRegistrationException;
 use App\Models\User;
 use App\Structures\Users\RegistrationDTO;
 
-interface RegistrationInterface
+interface AuthServiceInterface
 {
     /**
      * Функция регистрации пользователей в системе.

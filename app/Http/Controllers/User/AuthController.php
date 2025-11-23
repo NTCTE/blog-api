@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Contracts\User\RegistrationInterface;
+use App\Contracts\User\AuthServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegistrationRequest;
 use App\Http\Resources\User\RegistrationResource;
 use App\Structures\Users\RegistrationDTO;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RegistrationController extends Controller
+class AuthController extends Controller
 {
     public function __construct(
-        private RegistrationInterface $service
+        private AuthServiceInterface $service
     )
     {
 
