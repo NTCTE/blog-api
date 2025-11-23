@@ -7,12 +7,10 @@ use Spatie\LaravelData\Data;
 final class RegistrationDTO extends Data
 {
     public function __construct(
-        public string $name,
-        public string $email,
-        public string $password,
-        public ?string $bio
+        public readonly string $name,
+        public readonly string $email,
+        public readonly string $password,
+        public readonly ?string $bio
     )
-    {
-
-    }
+    {}
 }
