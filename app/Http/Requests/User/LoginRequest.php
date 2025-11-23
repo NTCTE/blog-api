@@ -30,4 +30,12 @@ class LoginRequest extends FormRequest
             ],
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'email' => __('attributes.user.email'),
+            'password' => __('attributes.user.password'),
+        ];
+    }
 }

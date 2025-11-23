@@ -36,4 +36,14 @@ class RegistrationRequest extends FormRequest
             ]
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => __('attributes.user.name'),
+            'email' => __('attributes.user.email'),
+            'password' => __('attributes.user.password'),
+            'bio' => __('attributes.user.bio'),
+        ];
+    }
 }
