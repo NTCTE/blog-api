@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Contracts\User\AuthServiceInterface;
+use App\Contracts\Services\AuthServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegistrationRequest;
 use App\Http\Resources\User\RegistrationResource;

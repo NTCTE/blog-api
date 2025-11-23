@@ -2,7 +2,7 @@
 
 namespace App\Services\User;
 
-use App\Contracts\User\AuthServiceInterface;
+use App\Contracts\Services\AuthServiceInterface;
 use App\Exceptions\User\UserRegistrationException;
 use App\Models\User;
 use App\Structures\Users\RegistrationDTO;

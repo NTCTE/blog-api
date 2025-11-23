@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\User;
+namespace App\Contracts\Services;
 
 use App\Exceptions\User\UserRegistrationException;
 use App\Models\User;
