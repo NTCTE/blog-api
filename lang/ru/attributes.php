@@ -6,5 +6,6 @@ return [
         'email' => '&laquo;Электронная почта&raquo;',
         'password' => '&laquo;Пароль&raquo;',
         'bio' => '&laquo;О себе&raquo;',
+        'remember' => '&laquo;Запомнить меня&raquo;',
     ],
 ];
