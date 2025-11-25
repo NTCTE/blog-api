@@ -6,5 +6,6 @@ return [
     ],
     'login' => [
         'logout' => 'You have been logged out successfully.',
+        'failed' => 'These credentials do not match our records.',
     ],
 ];
