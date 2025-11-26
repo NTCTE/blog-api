@@ -2,7 +2,6 @@
 
 namespace App\Structures\Post;
 
-use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
 
 final class PostDTO extends Data
