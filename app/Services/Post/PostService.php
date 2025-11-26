@@ -20,7 +20,7 @@ class PostService implements PostServiceInterface
         try {
             return Post::create(array_merge(
                 $post->toArray(),
-                ['user_id' => $userId],
+                ['author_id' => $userId],
             ));
         } catch (Throwable $e) {
             throw new PostCreateException(previous: $e);
@@ -48,15 +48,20 @@ class PostService implements PostServiceInterface
         return $existingPost;
     }
 
-    public function read(int $userId, int $postId): Post
+    public function read(int $postId, ?int $userId = null): Post
     {
         try {
-            $post = Post::findOrFail($postId);
+            $post = Post::with('author')
+                ->withCount([
+                    'likes as likes_count' => fn ($query) => $query->likes(),
+                    'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
+                ])
+                ->findOrFail($postId);
         } catch (ModelNotFoundException $e) {
             throw new PostNotFoundException(previous: $e);
         }
 
-        if ($post->is_draft && $post->user_id !== $userId) {
+        if ($post->is_draft && $post->author_id !== $userId) {
             throw new PostAccessDeniedException();
         }
 
