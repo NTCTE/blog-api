@@ -30,17 +30,28 @@ class PostService implements PostServiceInterface
     public function update(int $userId, int $postId, EditPostDTO $post): Post
     {
         try {
-            $existingPost = Post::findOrFail($postId);
+            $existingPost = Post::with('author')
+                ->withCount([
+                    'likes as likes_count' => fn ($query) => $query->likes(),
+                    'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
+                ])
+                ->findOrFail($postId);
         } catch (ModelNotFoundException $e) {
             throw new PostNotFoundException(previous: $e);
         }
 
-        if ($existingPost->user_id !== $userId) {
+        if ($existingPost->author_id !== $userId) {
             throw new PostAccessDeniedException();
         }
 
         try {
-            $existingPost->update($post->toArray());
+            $dataToUpdate = array_filter(
+                $post->toArray(),
+                fn ($value) => !is_null($value)
+            );
+            if (!empty($dataToUpdate)) {
+                $existingPost->update($dataToUpdate);
+            }
         } catch (Throwable $e) {
             throw new PostUpdateException(previous: $e);
         }
@@ -76,7 +87,7 @@ class PostService implements PostServiceInterface
             throw new PostNotFoundException(previous: $e);
         }
 
-        if ($post->user_id !== $userId) {
+        if ($post->author_id !== $userId) {
             throw new PostAccessDeniedException();
         }
 
