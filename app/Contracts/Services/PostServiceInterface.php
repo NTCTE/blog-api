@@ -26,14 +26,14 @@ interface PostServiceInterface
     /**
      * Метод получения поста по его идентификатору
      *
-     * @param  int $userId идентификатор пользователя, выполняющего запрос
      * @param  int $postId идентификатор поста
+     * @param  ?int $userId идентификатор пользователя, выполняющего запрос. Если пользователь не аутентифицирован, то передается null
      * @return Post возвращается Eloquent-модель поста
      *
      * @throws PostNotFoundException если пост не обнаружен, выбрасывается исключение
      * @throws PostAccessDeniedException если пост находится в черновиках и пользователь не является автором, то выбрасывается исключение
      */
-    public function read(int $userId, int $postId): Post;
+    public function read(int $postId, ?int $userId = null): Post;
 
     /**
      * Метод обновления поста
