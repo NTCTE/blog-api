@@ -9,6 +9,8 @@ use App\Exceptions\Post\PostUpdateException;
 use App\Models\Post;
 use App\Structures\Post\EditPostDTO;
 use App\Structures\Post\PostDTO;
+use App\Structures\Post\PostFilterDTO;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface PostServiceInterface
 {
@@ -60,4 +62,14 @@ interface PostServiceInterface
      * @throws PostAccessDeniedException если пользователь, который не является автором поста пытается удалить пост, выбрасывается исключение
      */
     public function delete(int $userId, int $postId): void;
+
+    /**
+     * Метод получения списка постов с фильтрацией и пагинацией
+     *
+     * @param  PostFilterDTO $filters DTO-сущность с параметрами фильтрации
+     * @param  int $perPage количество постов на странице (по умолчанию 15)
+     * @param  ?int $userId идентификатор пользователя, выполняющего запрос. Если пользователь не аутентифицирован, то передается null
+     * @return LengthAwarePaginator возвращается пагинированный список постов
+     */
+    public function list(PostFilterDTO $filters, int $perPage = 15, ?int $userId = null): LengthAwarePaginator;
 }
