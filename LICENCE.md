@@ -1,0 +1,25 @@
+# MIT License
+
+Copyright (c) 2025      Repiev George Denisovich <repev.egor@nttek.ru>
+                        SAPEI SR "Nizhny Tagil College of Trade and Economics" <info@nttek.ru>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+## *Russian Translation (Перевод на русский язык)*
+
+## Лицензия MIT
+
+Авторские права (c) 2025    Репьев Егор Денисович <repev.egor@nttek.ru>
+                            ГАПОУ СО "Нижнетагильский торгово-экономический колледж" <info@nttek.ru>
+
+Настоящим предоставляется бесплатное разрешение любому лицу, получившему копию данного программного обеспечения и сопроводительной документации (в дальнейшем именуемые "Программное обеспечение"), использовать Программное обеспечение без ограничений, включая, помимо прочего, права на использование, копирование, изменение, слияние, публикацию, распространение, сублицензирование и/или продажу копий Программного обеспечения, а также разрешение лицам, которым предоставляется Программное обеспечение, делать это, при соблюдении следующих условий:
+
+Вышеуказанное уведомление об авторских правах и данное разрешение должны быть включены во все копии или значительные части Программного обеспечения.
+
+ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ "КАК ЕСТЬ", БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ, ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И НЕНАРУШЕНИЯ ПРАВ. НИ ПРИ КАКИХ-ЛИБО ОБСТОЯТЕЛЬСТВАХ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО ИСКАМ, УБЫТКАМ ИЛИ ИНЫМ ОБЯЗАТЕЛЬСТВАМ, ВОЗНИКАЮЩИМ ИЗ ДОГОВОРА, НЕЗАВИСИМО ОТ ТОГО, ЯВЛЯЕТСЯ ЛИ ТАКОЕ ДЕЙСТВИЕ ДОГОВОРОМ, ДЕЛИКТОМ ИЛИ ИНЫМ, ВОЗНИКАЮЩИМ ИЗ ИСПОЛЬЗОВАНИЯ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ.
