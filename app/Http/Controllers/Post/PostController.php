@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Post;
 use App\Contracts\Services\PostServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\CreatePostRequest;
+use App\Http\Requests\Post\FiltersRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Http\Resources\Post\PostResource;
 use App\Structures\Post\EditPostDTO;
 use App\Structures\Post\PostDTO;
+use App\Structures\Post\PostFilterDTO;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,9 +22,17 @@ class PostController extends Controller
         private PostServiceInterface $service
     ) {}
 
-    public function index(Request $request)
+    public function index(FiltersRequest $request): JsonResource
     {
+        $filters = PostFilterDTO::from($request->validated());
 
+        $posts = $this->service->list(
+            $filters,
+            $filters->per_page ?? 15,
+            Auth::guard('sanctum')->id(),
+        );
+
+        return $posts->toResourceCollection(PostResource::class);
     }
 
     public function create(CreatePostRequest $request): JsonResource
