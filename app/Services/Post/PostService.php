@@ -10,6 +10,8 @@ use App\Exceptions\Post\PostUpdateException;
 use App\Structures\Post\PostDTO;
 use App\Models\Post;
 use App\Structures\Post\EditPostDTO;
+use App\Structures\Post\PostFilterDTO;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
@@ -92,5 +94,42 @@ class PostService implements PostServiceInterface
         }
 
         $post->delete();
+    }
+
+    public function list(PostFilterDTO $filters, int $perPage = 15, ?int $userId = null): LengthAwarePaginator
+    {
+        $query = Post::with('author')
+            ->withCount([
+                'likes as likes_count' => fn ($query) => $query->likes(),
+                'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
+            ]);
+
+        if ($filters->authorId !== null) {
+            $query->where('author_id', $filters->authorId);
+        }
+
+        if ($filters->isDraft !== null) {
+            $query->where('is_draft', $filters->isDraft);
+        } else {
+            // Exclude drafts for non-authors
+            if ($userId === null) {
+                $query->where('is_draft', false);
+            } else {
+                $query->where(function ($q) use ($userId) {
+                    $q->where('is_draft', false)
+                      ->orWhere('author_id', $userId);
+                });
+            }
+        }
+
+        if ($filters->searchTerm !== null) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('title', 'like', "%{$filters->searchTerm}%")
+                  ->orWhere('content', 'like', "%{$filters->searchTerm}%");
+            });
+        }
+
+        return $query->orderBy($filters->sortBy, $filters->sortOrder)
+                     ->paginate($perPage);
     }
 }
