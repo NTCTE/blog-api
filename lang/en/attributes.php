@@ -12,5 +12,10 @@ return [
         'heading' => '&laquo;Post heading&raquo;',
         'body' => '&laquo;Post body&raquo;',
         'is_draft' => '&laquo;Is draft&raquo;',
+        'author_id' => '&laquo;Author&raquo;',
+        'search_term' => '&laquo;Search term&raquo;',
+        'sort_by' => '&laquo;Sort by&raquo;',
+        'sort_order' => '&laquo;Sort order&raquo;',
+        'per_page' => '&laquo;Items per page&raquo;',
     ],
 ];
