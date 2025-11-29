@@ -12,11 +12,21 @@ use App\Models\Post;
 use App\Structures\Post\EditPostDTO;
 use App\Structures\Post\PostFilterDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
 class PostService implements PostServiceInterface
 {
+    private function queryWithRelations(): Builder
+    {
+        return Post::with('author')
+            ->withCount([
+                'likes as likes_count' => fn ($query) => $query->likes(),
+                'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
+            ]);
+    }
+
     public function create(int $userId, PostDTO $post): Post
     {
         try {
@@ -32,11 +42,7 @@ class PostService implements PostServiceInterface
     public function update(int $userId, int $postId, EditPostDTO $post): Post
     {
         try {
-            $existingPost = Post::with('author')
-                ->withCount([
-                    'likes as likes_count' => fn ($query) => $query->likes(),
-                    'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
-                ])
+            $existingPost = $this->queryWithRelations()
                 ->findOrFail($postId);
         } catch (ModelNotFoundException $e) {
             throw new PostNotFoundException(previous: $e);
@@ -64,11 +70,7 @@ class PostService implements PostServiceInterface
     public function read(int $postId, ?int $userId = null): Post
     {
         try {
-            $post = Post::with('author')
-                ->withCount([
-                    'likes as likes_count' => fn ($query) => $query->likes(),
-                    'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
-                ])
+            $post = $this->queryWithRelations()
                 ->findOrFail($postId);
         } catch (ModelNotFoundException $e) {
             throw new PostNotFoundException(previous: $e);
@@ -98,11 +100,7 @@ class PostService implements PostServiceInterface
 
     public function list(PostFilterDTO $filters, int $perPage = 15, ?int $userId = null): LengthAwarePaginator
     {
-        $query = Post::with('author')
-            ->withCount([
-                'likes as likes_count' => fn ($query) => $query->likes(),
-                'dislikes as dislikes_count' => fn ($query) => $query->dislikes(),
-            ]);
+        $query = $this->queryWithRelations();
 
         if ($filters->authorId !== null) {
             $query->where('author_id', $filters->authorId);
