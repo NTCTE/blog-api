@@ -23,11 +23,21 @@ interface AuthServiceInterface
      * Функция аутентификации пользователя в системе.
      *
      * @param LoginDTO $user DTO-структура аутентификации пользователя
-     * @return array{0: User, 1: string} Массив с Eloquent-моделью пользователя и токеном
+     * @return array[0: User, 1: string] Массив с Eloquent-моделью пользователя и токеном
      *
      * @throws UserLoginException Если авторизация не удалась
      */
     public function login(LoginDTO $user): array;
+
+    /**
+     * Функция SPA-аутентификации пользователя в системе.
+     *
+     * @param  LoginDTO $user DTO-структура аутентификации пользователя
+     * @return User Возвращается Eloquent-модель аутентифицированного пользователя
+     *
+     * @throws UserLoginException Если авторизация не удалась
+     */
+    public function spaLogin(LoginDTO $user): User;
 
     /**
      * Функция выхода пользователя из системы.
@@ -35,6 +45,13 @@ interface AuthServiceInterface
      * @return void
      */
     public function logout(): void;
+
+    /**
+     * Функция SPA-выхода пользователя из системы.
+     *
+     * @return void
+     */
+    public function spaLogout(): void;
 
     /**
      * Функция обновления токена пользователя.
