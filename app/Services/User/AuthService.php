@@ -47,11 +47,28 @@ class AuthService implements AuthServiceInterface
         ];
     }
 
+    public function spaLogin(LoginDTO $user): User
+    {
+        if (!Auth::attempt([
+            'email' => $user->email,
+            'password' => $user->password,
+        ])) {
+            throw new UserLoginException();
+        }
+
+        return Auth::user();
+    }
+
     public function logout(): void
     {
         Auth::user()
             ->currentAccessToken()
             ->delete();
+    }
+
+    public function spaLogout(): void
+    {
+        Auth::logout();
     }
 
     public function refreshToken(User $user): string
