@@ -46,4 +46,21 @@ class AuthController extends Controller
             'message' => __('user.login.logout')
         ]);
     }
+
+    public function spaLogin(LoginRequest $request): JsonResource
+    {
+        $data = LoginDTO::from($request->validated());
+        $user = $this->service->spaLogin($data);
+
+        return $user->toResource(LoginResource::class);
+    }
+
+    public function spaLogout(): JsonResponse
+    {
+        $this->service->spaLogout();
+
+        return response()->json([
+            'message' => __('user.login.logout')
+        ]);
+    }
 }
