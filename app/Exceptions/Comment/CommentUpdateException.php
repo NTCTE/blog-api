@@ -2,25 +2,11 @@
 
 namespace App\Exceptions\Comment;
 
-use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Exceptions\BaseException;
 
-class CommentUpdateException extends Exception
+class CommentUpdateException extends BaseException
 {
-    public function __construct(
-        string $message = 'comment.exception.update',
-        int $code = 0,
-        ?\Throwable $previous = null
-    )
-    {
-        parent::__construct(__($message), $code, $previous);
-    }
-
-    public function render(Request $request): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => $this->message,
-        ], 501);
-    }
+    protected int $statusCode = 501;
+    protected string $defaultMessage = 'comment.exception.update';
+    protected bool $shouldReport = true;
 }

@@ -2,30 +2,11 @@
 
 namespace App\Exceptions\User;
 
-use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Exceptions\BaseException;
 
-class UserRegistrationException extends Exception
+class UserRegistrationException extends BaseException
 {
-    public function __construct(
-        string $message = 'user.registration.failed',
-        int $code = 0,
-        ?\Throwable $previous = null
-        )
-    {
-        parent::__construct(__($message), $code, $previous);
-    }
-
-    public function report(): null
-    {
-        return null;
-    }
-
-    public function render(Request $request): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => $this->message,
-        ], 422);
-    }
+    protected int $statusCode = 422;
+    protected string $defaultMessage = 'user.registration.failed';
+    protected bool $shouldReport = false;
 }

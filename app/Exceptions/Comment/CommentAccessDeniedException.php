@@ -2,30 +2,11 @@
 
 namespace App\Exceptions\Comment;
 
-use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Exceptions\BaseException;
 
-class CommentAccessDeniedException extends Exception
+class CommentAccessDeniedException extends BaseException
 {
-    public function __construct(
-        string $message = 'comment.exception.denied',
-        int $code = 0,
-        ?\Throwable $previous = null
-    )
-    {
-        parent::__construct(__($message), $code, $previous);
-    }
-
-    public function report(): null
-    {
-        return null;
-    }
-
-    public function render(Request $request): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => $this->message,
-        ], 403);
-    }
+    protected int $statusCode = 403;
+    protected string $defaultMessage = 'comment.exception.denied';
+    protected bool $shouldReport = false;
 }
