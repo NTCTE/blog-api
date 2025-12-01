@@ -16,10 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(LocalizationMiddleware::class);
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(function (Request $request, \Throwable $e) {
-            if ($request->is('api/*')) {
+            if ($request->is('api/*', 'spa/*')) {
                 return true;
             }
 
@@ -27,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (AuthenticationException $e, Request $request)  {
-            if ($request->is('api/*') || $request->expectsJson()) {
+            if ($request->is('api/*', 'spa/*') || $request->expectsJson()) {
                 return response()->json([
                     'message' => __('auth.unauthenticated'),
                 ], 401);
