@@ -6,6 +6,8 @@ use App\Exceptions\Comment\CommentAccessDeniedException;
 use App\Exceptions\Comment\CommentCreateException;
 use App\Exceptions\Comment\CommentNotFoundException;
 use App\Models\Comment;
+use App\Structures\Comment\CommentDTO;
+use App\Structures\Comment\UpdateCommentDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface CommentServiceInterface
@@ -13,15 +15,12 @@ interface CommentServiceInterface
     /**
      * Метод создания комментария
      *
-     * @param  int $userId идентификатор пользователя, выполняющего запрос
-     * @param  int $postId идентификатор поста, к которому добавляется комментарий
-     * @param  string $content содержимое комментария
-     * @param  ?int $parentId идентификатор родительского комментария, если это ответ на другой комментарий
+     * @param  CommentDTO $comment DTO-сущность комментария
      * @return Comment возвращается Eloquent-модель созданного комментария
      *
      * @throws CommentCreateException в случае ошибки при создании комментария
      */
-    public function create(int $userId, int $postId, string $content, ?int $parentId = null): Comment;
+    public function create(CommentDTO $comment): Comment;
 
     /**
      * Метод получения комментария по идентификатору
@@ -38,13 +37,13 @@ interface CommentServiceInterface
      *
      * @param  int $userId идентификатор пользователя, выполняющего запрос
      * @param  int $commentId идентификатор комментария, в котором выполняется обновление
-     * @param  string $content содержимое комментария
+     * @param  UpdateCommentDTO $comment содержимое комментария
      * @return Comment возвращается Eloquent-модель обновленного комментария
      *
      * @throws CommentNotFoundException если комментарий с указанным идентификатором не найден
      * @throws CommentAccessDeniedException если пользователь не имеет прав на обновление комментария
      */
-    public function update(int $userId, int $commentId, string $content): Comment;
+    public function update(int $userId, int $commentId, UpdateCommentDTO $comment): Comment;
 
     /**
      * Метод удаления комментария
