@@ -47,11 +47,11 @@ class FiltersRequest extends FormRequest
     {
         return [
             'author_id' => __('attributes.post.author_id'),
-            'search_term' => __('attributes.post.search_term'),
+            'search_term' => __('attributes.filters.search_term'),
             'is_draft' => __('attributes.post.is_draft'),
-            'sort_by' => __('attributes.post.sort_by'),
-            'sort_order' => __('attributes.post.sort_order'),
-            'per_page' => __('attributes.post.per_page'),
+            'sort_by' => __('attributes.filters.sort_by'),
+            'sort_order' => __('attributes.filters.sort_order'),
+            'per_page' => __('attributes.filters.per_page'),
         ];
     }
 }
