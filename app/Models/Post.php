@@ -31,6 +31,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function scopePublished(Builder $query): void
     {
         $query->where('is_draft', false);
