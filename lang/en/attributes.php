@@ -19,6 +19,11 @@ return [
         'post_id' => '&laquo;Post&raquo;',
         'parent_id' => '&laquo;Parent comment ID&raquo;',
     ],
+    'like' => [
+        'model' => '&laquo;Liked model&raquo;',
+        'model_id' => '&laquo;Liked model ID&raquo;',
+        'is_like' => '&laquo;Is like&raquo;',
+    ],
     'filters' => [
         'per_page' => '&laquo;Items per page&raquo;',
         'search_term' => '&laquo;Search term&raquo;',

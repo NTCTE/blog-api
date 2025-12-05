@@ -19,6 +19,11 @@ return [
         'post_id' => '&laquo;ID поста&raquo;',
         'parent_id' => '&laquo;ID родительского комментария&raquo;',
     ],
+    'like' => [
+        'model' => '&laquo;Модель объекта&raquo;',
+        'model_id' => '&laquo;ID объекта&raquo;',
+        'is_like' => '&laquo;Это лайк&raquo;',
+    ],
     'filters' => [
         'per_page' => '&laquo;Элементов на страницу&raquo;',
         'search_term' => '&laquo;Поисковый запрос&raquo;',
