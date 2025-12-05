@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Like\LikeController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,11 @@ Route::prefix('comment/{comment_id}')->group(function() {
         ->name('comment.read');
     Route::get('/replies', [CommentController::class, 'replies'])
         ->name('comment.replies');
+});
+
+Route::prefix('upvotes')->group(function() {
+    Route::get('/', [LikeController::class, 'read'])
+        ->name('likes.read');
 });
 
 Route::middleware('guest')->prefix('user')
@@ -51,5 +57,12 @@ Route::middleware('auth:sanctum')->group(function() {
             ->name('comment.update');
         Route::delete('/{comment_id}', [CommentController::class, 'delete'])
             ->name('comment.delete');
+    });
+
+    Route::prefix('upvotes')->group(function() {
+        Route::post('/', [LikeController::class, 'create'])
+            ->name('likes.create');
+        Route::delete('/', [LikeController::class, 'delete'])
+            ->name('likes.delete');
     });
 });
