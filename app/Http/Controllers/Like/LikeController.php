@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Like;
 
 use App\Contracts\Services\LikeInterface;
-use App\Enums\Likes\MorphModelsEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Filters\PerPageRequest;
 use App\Http\Requests\Like\CreateLikeRequest;
+use App\Http\Requests\Like\DeleteLikeRequest;
+use App\Http\Requests\Like\ReadLikesRequest;
 use App\Http\Resources\Like\LikesResource;
 use App\Structures\Filters\PerPageDTO;
+use App\Structures\Like\CreateLikeDTO;
+use App\Structures\Like\DeleteLikeDTO;
+use App\Structures\Like\ReadLikesDTO;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
@@ -20,27 +24,33 @@ class LikeController extends Controller
 
     public function create(CreateLikeRequest $request): JsonResponse
     {
-        return response()
-            ->json(status: $this->service
-                ->create($model, $modelId, Auth::guard('sanctum')->id(), $isLike) ?
-                    204 :
-                    411
-            );
+        $data = CreateLikeDTO::from($request->validated());
+
+        $wasCreated = $this->service
+            ->create($data, Auth::guard('sanctum')->id());
+
+        return response()->json([
+            'was_created' => $wasCreated,
+        ], 201);
     }
 
-    public function read(PerPageRequest $request, MorphModelsEnum $model, int $modelId, bool $isLike): JsonResponse
+    public function read(ReadLikesRequest $request): JsonResource
     {
-        $likes = $this->service
-            ->read($model, $modelId, $isLike, PerPageDTO::from($request));
+        $perPage = PerPageDTO::from($request);
+        $data = ReadLikesDTO::from($request->validated());
 
-        return $likes->toResourceCollection(LikesResource::class);
+        return $this->service
+            ->read($data, $perPage)
+            ->toResourceCollection(LikesResource::class);
     }
 
-    public function delete(MorphModelsEnum $model, int $modelId): JsonResponse
+    public function delete(DeleteLikeRequest $request): JsonResponse
     {
+        $data = DeleteLikeDTO::from($request->validated());
+
         $this->service
-            ->delete($model, $modelId, Auth::guard('sanctum')->id());
+            ->delete($data, Auth::guard('sanctum')->id());
 
-        return response()->json(status: 204);
+        return response()->json([], 204);
     }
 }
