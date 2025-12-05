@@ -6,7 +6,7 @@ use App\Enums\Likes\MorphModelsEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateLikeRequest extends FormRequest
+class DeleteLikeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,10 +32,6 @@ class CreateLikeRequest extends FormRequest
                 'required',
                 'int',
             ],
-            'is_like' => [
-                'required',
-                'boolean',
-            ],
         ];
     }
 
@@ -44,7 +40,6 @@ class CreateLikeRequest extends FormRequest
         return [
             'model' => __('attributes.like.model'),
             'model_id' => __('attributes.like.model_id'),
-            'is_like' => __('attributes.like.is_like'),
         ];
     }
 }
