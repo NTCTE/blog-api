@@ -3,52 +3,63 @@
 namespace App\Services\Like;
 
 use App\Contracts\Services\LikeInterface;
-use App\Enums\Likes\MorphModelsEnum;
 use App\Models\Like;
 use App\Structures\Filters\PerPageDTO;
+use App\Structures\Like\CreateLikeDTO;
+use App\Structures\Like\DeleteLikeDTO;
+use App\Structures\Like\ReadLikesDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LikeService implements LikeInterface
 {
-    public function create(MorphModelsEnum $model, int $modelId, int $userId, bool $isLike = true): bool
+    public function create(CreateLikeDTO $payload, int $userId): bool
     {
-        $like = Like::where('likeable_type', $model->value)
-            ->where('likeable_id', $modelId)
-            ->where('author_id', $userId)
-            ->where('is_dislike', !$isLike);
+        $like = Like::where('likeable_type', $payload->model->value)
+            ->where('likeable_id', $payload->modelId)
+            ->where('author_id', $userId);
 
         if ($like->count() == 0) {
-            $like->fill([
+            Like::create([
+                'likeable_type' => $payload->model->value,
+                'likeable_id' => $payload->modelId,
                 'author_id' => $userId,
-                'likeable_type' => $model->value,
-                'likeable_id' => $modelId,
-                'is_dislike' => !$isLike,
-            ])->save();
+                'is_dislike' => !$payload->isLike,
+            ]);
 
             return true;
+        }
+
+        if ($like->count() == 1) {
+            $existingLike = $like->first();
+
+            if ($existingLike->is_dislike !== !$payload->isLike) {
+                $existingLike->is_dislike = !$payload->isLike;
+                $existingLike->save();
+
+                return true;
+            }
         }
 
         return false;
     }
 
-    public function read(MorphModelsEnum $model, int $modelId, bool $likes = true, PerPageDTO $perPage): ?LengthAwarePaginator
+    public function read(ReadLikesDTO $payload, PerPageDTO $perPage): ?LengthAwarePaginator
     {
-        $returned = $model->value::find($modelId);
-
-        if ($returned === null) {
-            return null;
-        }
-
-        return $returned->likes()
-            ->where('is_dislike', !$likes)
-            ->paginate();
+        return Like::where('likeable_type', $payload->model->value)
+            ->where('likeable_id', $payload->modelId)
+            ->where('is_dislike', !$payload->isLike)
+            ->with('author')
+            ->paginate($perPage->perPage);
     }
 
-    public function delete(MorphModelsEnum $model, int $modelId, int $userId): void
+    public function delete(DeleteLikeDTO $payload, int $userId): void
     {
-        Like::where('likeable_type', $model->value)
-            ->where('likeable_id', $modelId)
-            ->where('author_id', $userId)
-            ->delete();
+        $like = Like::where('likeable_type', $payload->model->value)
+            ->where('likeable_id', $payload->modelId)
+            ->where('author_id', $userId);
+
+        if ($like->count() > 0) {
+            $like->delete();
+        }
     }
 }
